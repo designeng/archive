@@ -1,0 +1,32 @@
+<div id="step-{{step}}">
+	<form class="form-horizontal first">
+	  <div class="control-group numerator">
+		<div class="controls">
+		  <input type="text" class="input-mini mult1" name="mult1" id="numerator-{{step}}-1" size="2" maxlength="2">
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="text" class="input-mini mult3" name="mult3" id="denominator-{{step}}-1" size="2" maxlength="2">
+		</div>
+	  </div>
+	</form>
+	
+	<div id="operationSign" class="operation operation-step-{{step}}">{{operationSign}}</div>
+	
+	<form class="form-horizontal second">
+	  <div class="control-group numerator">
+		<div class="controls">
+		  <input type="text" class="input-mini mult2" name="mult2" id="numerator-{{step}}-2" size="2" maxlength="2">
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="text" class="input-mini mult4" name="mult4" id="denominator-{{step}}-2" size="2" maxlength="2">
+		</div>
+	  </div>
+	</form>
+	
+	<div id="equialSign" class="operation">{{equialSign}}</div>
+	
+</div>

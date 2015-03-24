@@ -1,0 +1,24 @@
+<div id="step-{{step}}">
+	<form class="form-horizontal first">
+	  <div class="control-group numerator">
+		<label class="control-label" for="numerator-1">{{leftFractionNumerator}}</label>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label" for="denominator-{{step}}-1">{{leftFractionDenominator}}</label>
+	  </div>
+	</form>
+	
+	<div id="operationSign" class="operation operation-step-{{step}}">{{operationSign}}</div>
+	
+	<form class="form-horizontal second">
+	  <div class="control-group numerator">
+		<label class="control-label" for="numerator-{{step}}-2">{{rightFractionNumerator}}</label>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label" for="denominator-{{step}}-2">{{rightFractionDenominator}}</label>
+	  </div>
+	</form>
+	
+	<div id="equialSign" class="operation">{{equialSign}}</div>
+	
+</div>

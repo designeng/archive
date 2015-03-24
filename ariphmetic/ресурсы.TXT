@@ -1,0 +1,8 @@
+https://github.com/theironcook/Backbone.ModelBinder
+
+
+Poor man’s data-binding
+
+Например,
+var denominatorRange = fTask.pluck("denominator");
+позволит создать упорядоченную выборку знаменателей. 

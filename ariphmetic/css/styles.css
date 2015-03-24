@@ -1,0 +1,78 @@
+.dropdown-menu {
+    max-height: 400px;
+    overflow-y: scroll;
+    width: 220px;
+}
+
+.list-item {
+    padding-top: 6px;
+    padding-left: 56px;
+}
+
+.no-reports {
+    display: none;
+}
+
+.datalog{
+			margin-top:300px;
+		}
+#initexpr{
+	margin-left: 50px;
+}
+#alltasks{
+	margin-top: 250px;
+	margin-left: 50px;
+}
+
+#task{
+	margin-top:200px;
+	margin-left:100px;
+}
+.form-horizontal{
+	width:50px;
+	
+}
+.control-group{
+	text-align:left;
+}
+.form-horizontal .controls {
+margin-left: 50px;
+}
+.form-horizontal .control-label{
+	font-size:18pt;
+	text-align:left;
+	width:50px;
+}
+.input-mini{
+	width:50px;
+}
+#content{
+	margin:10px auto 5px;
+}
+#floater	{float:left; height:50%; margin-bottom:-120px;}
+.frac{
+	font-size:20pt;
+	float:left;
+}
+.numerator{
+	/* border-bottom:1px solid; */
+}
+.denominator{
+	text-align:center;
+}
+.first{
+	float:left;
+}
+.second{
+	float:left;
+}
+.operation, .equialSign{
+	float:left;
+	font-size:40pt;
+	margin-left:110px;
+	margin-right:50px;
+	margin-top:30px;
+}
+.operation-step-0{
+	margin-left:25px;
+}
