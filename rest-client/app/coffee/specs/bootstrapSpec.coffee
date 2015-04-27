@@ -1,0 +1,4 @@
+define
+    $plugins: [
+        "wire/debug"
+    ]

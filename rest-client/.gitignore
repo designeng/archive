@@ -1,0 +1,13 @@
+.DS_Store
+
+app/js/config.json
+
+node_modules/*
+bower_components/*
+
+*.orig
+.project
+.tmp_*
+*Thumbs.db
+
+app/one.html
