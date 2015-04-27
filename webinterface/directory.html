@@ -1,0 +1,201 @@
+<html>
+  <head>
+    <title></title>
+    <style>{style}</style>
+    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet" />
+     <link href="/webinterface/css/bootstrap-modal.css" rel="stylesheet" />
+    <script>
+      function $(id){
+        var el = 'string' == typeof id
+          ? document.getElementById(id)
+          : id;
+
+        el.on = function(event, fn){
+          if ('content loaded' == event) event = 'DOMContentLoaded';
+          el.addEventListener(event, fn, false);
+        };
+
+        el.all = function(selector){
+          return $(el.querySelectorAll(selector));
+        };
+
+        el.each = function(fn){
+          for (var i = 0, len = el.length; i < len; ++i) {
+            fn($(el[i]), i);
+          }
+        };
+
+        el.getClasses = function(){
+          return this.getAttribute('class').split(/\s+/);
+        };
+
+        el.addClass = function(name){
+          var classes = this.getAttribute('class');
+          el.setAttribute('class', classes
+            ? classes + ' ' + name
+            : name);
+        };
+
+        el.removeClass = function(name){
+          var classes = this.getClasses().filter(function(curr){
+            return curr != name;
+          });
+          this.setAttribute('class', classes);
+        };
+
+        return el;
+      }
+
+      function search() {
+        var str = $('search').value
+          , links = $('files').all('a');
+
+        links.each(function(link){
+          var text = link.textContent;
+
+          if ('..' == text) return;
+          if (str.length && ~text.indexOf(str)) {
+            link.addClass('highlight');
+          } else {
+            link.removeClass('highlight');
+          }
+        });
+      }
+
+
+      if(!window.em){
+        var em = {directory: '{directory}'};
+        document.title = "listing directory " + em.directory;
+      }
+
+      $(window).on('content loaded', function(){
+        //$('.linkedPath').html(em.linkedPath);
+        $('search').on('keyup', search);
+      });
+    </script>
+
+    <script type="text/template" class="message">
+      <li>
+        <span class="<%- timestamp %>">[<%- timestamp %>]</span>
+        <span class="<%- level %> message-level"><%- level %>:</span>
+        <span class="message"><%- message %></span>
+      </li>
+    </script>
+
+  </head>
+  <body class="directory">
+    <div id="result"></div>
+    <input id="clearlog" type="button" value="Clear log"  />
+    <input id="search" type="text" placeholder="Search" autocomplete="off" />
+    <div id="wrapper">
+      <h1 class="linkedPath">{linked-path}</h1>
+      <div class="create-layout" href="#layout-creation" data-toggle="modal">createLayout</div>
+      {files}
+    </div>
+
+    <div id="logwrapper">
+      <ul id="log-wrapper"></ul>
+    </div>
+    
+    <!-- jquery-1.10.1.min  above all needed funcs -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/webinterface/js/underscore.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/webinterface/js/tools.js"></script>
+    <script type="text/javascript" src="/webinterface/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/webinterface/js/bootstrap-modalmanager.js"></script>
+    <script type="text/javascript" src="/webinterface/js/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="/webinterface/js/jquery-addable.js"></script>
+
+    <script>
+      var socket = io.connect('http://localhost:{port}');
+
+socket.on('added', function(data) {
+  console.log("SOCET", data);
+  window.location.reload();
+});
+socket.on('deleted', function(data) {
+  console.log(data);
+  window.location.reload();
+});
+socket.on('logchanged', function(data) {
+  console.log("log changed");
+  logReload();
+});
+    </script>
+
+<!-- Modal with functions list -->
+
+<div id="functions-list" class="modal hide fade" tabindex="-1" data-width="760">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <h3>Add Functions</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div class="span6">
+        <p><input type="checkbox" class="span12" value="render" name="render"><span class="funcname">render</span></p>
+        <p><input type="checkbox" class="span12" value="onRender"><span class="funcname">onRender</span></p>
+        <p><input type="checkbox" class="span12" value="beforeRender"><span class="funcname">beforeRender</span></p>
+        <p><input type="checkbox" class="span12" value="initialize" name="initialize"><span class="funcname">initialize</span></p>
+        <p><input type="checkbox" class="span12" value="bindUIElements"><span class="funcname">bindUIElements</span></p>
+        <p><input type="checkbox" class="span12" value="addInitializer"><span class="funcname">addInitializer</span></p>
+        <p><input type="checkbox" class="span12" value="addFinalizer"><span class="funcname">addFinalizer</span></p>
+      </div>
+      <div class="span6">
+        <!--
+        <p><input type="checkbox" class="span12" value=""><span class="funcname">func name ...</span></p>
+        <p><input type="checkbox" class="span12" value=""><span class="funcname">func name ...</span></p>
+        ...
+      -->
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn">Close</button>
+    <button type="button" class="btn btn-primary" id="add-functions" data-savedata="modal">Save</button>
+  </div>
+</div>
+
+<!-- Modal with layout creation form -->
+
+<div id="layout-creation" class="modal hide fade" tabindex="-1" data-width="760">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <h3>Create Layout</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div class="span6">
+        <p>
+          <form id="layout-creation-form">
+            <input type="input" class="span12 layout-data" value="" name="layoutName">
+            <label for "layoutName">layout name</label>
+
+            <div class="template_element">
+                <label for="region-input"></label>
+                <input type="text" name="region-input" class="layout-region-data"/>
+                <a href="#" class="remove">Remove</a>
+            </div>
+
+            <a href="#" class="add_field">Add Region</a>
+
+            <script type="text/javascript">
+              $('#layout-creation-form .add_field').adds('#layout-creation-form .template_element');
+            </script>
+          </form>
+        </p>        
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn">Close</button>
+    <button type="button" class="btn btn-primary" id="create-layout-control" data-savedata="modal">Save</button>
+  </div>
+</div>
+
+   
+
+  </body>
+</html>
